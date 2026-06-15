@@ -83,6 +83,7 @@ class Capctl < Formula
   license "Apache-2.0"
 
   depends_on "python@3.12"
+  depends_on "rust" => :build  # pydantic-core builds from a Rust sdist
 
 {resources}
   def install
