@@ -10,6 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # On a private repo the runner's git context forces authenticated access to
+      # github.com, which breaks Homebrew's anonymous clones of homebrew-core.
+      # Inject the workflow token for all github.com git operations.
+      - name: Authenticate git to github.com
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@main
 
