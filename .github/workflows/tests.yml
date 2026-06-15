@@ -20,12 +20,18 @@ jobs:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@main
 
+      # Modern Homebrew rejects installing a bare formula path; tap the local
+      # checkout so the formula installs as SimonTarara62/tap/capctl (the real
+      # user-facing path).
+      - name: Tap the local checkout
+        run: brew tap SimonTarara62/tap "$GITHUB_WORKSPACE"
+
       - name: Install formula from source
-        run: brew install --build-from-source --verbose ./Formula/capctl.rb
+        run: brew install --build-from-source --verbose SimonTarara62/tap/capctl
 
       - name: Run formula test block
-        run: brew test ./Formula/capctl.rb
+        run: brew test SimonTarara62/tap/capctl
 
       - name: Audit formula
         continue-on-error: true
-        run: brew audit --formula ./Formula/capctl.rb
+        run: brew audit --tap SimonTarara62/tap capctl
