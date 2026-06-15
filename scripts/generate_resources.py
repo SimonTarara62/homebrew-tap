@@ -97,6 +97,12 @@ end
 
 
 def main() -> None:
+    if sys.version_info[:2] != (3, 12):
+        raise SystemExit(
+            "generate_resources.py must run on Python 3.12 to match the formula's "
+            f"depends_on 'python@3.12' (got "
+            f"{sys.version_info.major}.{sys.version_info.minor})"
+        )
     if len(sys.argv) != 2:
         raise SystemExit("usage: generate_resources.py <version>")
     version = sys.argv[1]

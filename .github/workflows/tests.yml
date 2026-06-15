@@ -20,4 +20,5 @@ jobs:
         run: brew test ./Formula/capctl.rb
 
       - name: Audit formula
-        run: brew audit --formula ./Formula/capctl.rb || true
+        continue-on-error: true
+        run: brew audit --formula ./Formula/capctl.rb
