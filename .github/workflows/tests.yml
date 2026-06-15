@@ -20,11 +20,15 @@ jobs:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@main
 
-      # Modern Homebrew rejects installing a bare formula path; tap the local
-      # checkout so the formula installs as SimonTarara62/tap/capctl (the real
-      # user-facing path).
-      - name: Tap the local checkout
-        run: brew tap SimonTarara62/tap "$GITHUB_WORKSPACE"
+      # Modern Homebrew rejects installing a bare formula path; expose the
+      # checkout as the tap by symlinking it into Homebrew's Taps directory, so
+      # the formula installs as SimonTarara62/tap/capctl (the real user path).
+      - name: Link the checkout as a tap
+        run: |
+          TAP_DIR="$(brew --repository)/Library/Taps/simontarara62/homebrew-tap"
+          mkdir -p "$(dirname "$TAP_DIR")"
+          ln -s "$GITHUB_WORKSPACE" "$TAP_DIR"
+          brew tap
 
       - name: Install formula from source
         run: brew install --build-from-source --verbose SimonTarara62/tap/capctl
