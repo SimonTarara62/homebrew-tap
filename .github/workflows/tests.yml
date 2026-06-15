@@ -1,0 +1,23 @@
+name: tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test-formula:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install formula from source
+        run: brew install --build-from-source --verbose ./Formula/capctl.rb
+
+      - name: Run formula test block
+        run: brew test ./Formula/capctl.rb
+
+      - name: Audit formula
+        run: brew audit --formula ./Formula/capctl.rb || true
