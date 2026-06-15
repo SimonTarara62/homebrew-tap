@@ -39,3 +39,18 @@ jobs:
       - name: Audit formula
         continue-on-error: true
         run: brew audit --tap SimonTarara62/tap capctl
+
+  # End-to-end smoke test of the REAL user path: tap the published public repo
+  # over the network and install, with no checkout/symlink. This is exactly what
+  # `brew install SimonTarara62/tap/capctl` does on a user's machine.
+  install-from-public-tap:
+    runs-on: macos-latest
+    steps:
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@main
+
+      - name: Install exactly as a user would
+        run: brew install SimonTarara62/tap/capctl
+
+      - name: Verify capctl runs
+        run: capctl --version
