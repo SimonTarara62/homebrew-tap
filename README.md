@@ -1,5 +1,7 @@
 # homebrew-tap
 
+[![tests](https://github.com/SimonTarara62/homebrew-tap/actions/workflows/tests.yml/badge.svg)](https://github.com/SimonTarara62/homebrew-tap/actions/workflows/tests.yml)
+
 Homebrew tap for [`capctl`](https://github.com/SimonTarara62/capitalcom-cli) —
 the unofficial Capital.com Open API command-line client.
 
